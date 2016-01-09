@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle Hatena Blog Entry Post'
+      'command': 'hatena-blog:toggle'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Hatena Blog Entry Post'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'hatena-blog:toggle'
+        }
+      ]
+    ]
+  }
+]
