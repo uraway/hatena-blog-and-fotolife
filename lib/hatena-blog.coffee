@@ -2,7 +2,6 @@
 HatenablogView = require './hatena-blog-view'
 
 module.exports =
-
   config:
     hatenaId:
       type: 'string'
