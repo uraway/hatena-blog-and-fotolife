@@ -7,7 +7,7 @@
   "activationCommands": {
     "atom-workspace": "hatena-blog:toggle"
   },
-  "repository": "https://github.com/atom/hatena-blog-entry-post",
+  "repository": "https://github.com/uraway/hatena-blog-entry-post",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
