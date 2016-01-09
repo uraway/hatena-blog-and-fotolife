@@ -1,5 +1,5 @@
 {
-  "name": "HatenaBlogEntryPost",
+  "name": "hatena-blog-entry-post",
   "main": "./lib/hatena-blog",
   "version": "0.1.0",
   "description": "post a Hatena Blog entry",
