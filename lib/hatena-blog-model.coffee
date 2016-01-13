@@ -1,6 +1,6 @@
 moment = require('moment')
 https = require 'https'
-request = require 'superagent'
+request = require 'request'
 _ = require 'underscore'
 
 module.exports = class HatenaBlogPost
