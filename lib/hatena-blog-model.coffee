@@ -1,6 +1,7 @@
 moment = require('moment')
-https = require('https')
-request = require('superagent')
+https = require 'https'
+request = require 'request'
+_ = require 'underscore'
 
 module.exports = class HatenaBlogPost
   constructor: ->
@@ -22,33 +23,33 @@ module.exports = class HatenaBlogPost
 
     requestBody = """
       <?xml version="1.0" encoding="utf-8"?>
-        <entry  xmlns="http://www.w3.org/2005/Atom"
-                xmlns:app="http://www.w3.org/2007/app">
-
+      <entry xmlns="http://www.w3.org/2005/Atom"
+             xmlns:app="http://www.w3.org/2007/app">
         <title>#{@entryTitle}</title>
-
         <author><name>#{@getHatenaId()}</name></author>
-
-        <content type="text/plain">#{@entryBody}</content>
-        
-        <updated>#{moment().format("YYYY-MM-DDTHH:mm:ss")}</updated>
-
-        <category />
-
+        <content type="text/plain">
+          #{_.escape(@entryBody)}
+        </content>
+        <updated>#{moment().format('YYYY-MM-DDTHH:mm:ss')}</updated>
         <app:control>
           <app:draft>#{draft}</app:draft>
         </app:control>
-        </entry>
+      </entry>
     """
 
     options =
       hostname: 'blog.hatena.ne.jp'
       path: "/#{@getHatenaId()}/#{@getBlogId()}/atom/entry"
-      method: 'POST'
       auth: "#{@getHatenaId()}:#{@getApiKey()}"
+      method: 'POST'
 
-    request
-      .post("https://blog.hatena.ne.jp/#{@getHatenaId()}/#{@getBlogId()}/atom/entry")
-      .auth("#{@getHatenaId()}:#{@getApiKey()}")
-      .send(requestBody)
-      .end(callback)
+    request = https.request options, (res) ->
+      res.setEncoding "utf-8"
+      body = ''
+      res.on "data", (chunk) ->
+        body += chunk
+      res.on "end", ->
+        callback(body)
+
+    request.write requestBody
+    request.end()

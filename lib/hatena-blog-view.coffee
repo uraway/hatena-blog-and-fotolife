@@ -1,7 +1,7 @@
 {CompositeDisposable} = require 'atom'
 {View} = require 'space-pen'
 {TextEditorView} = require 'atom-space-pen-views'
-Clipboard = require 'clipboard'
+{parseString} = require 'xml2js'
 
 HatenaBlogPost = require './hatena-blog-model'
 
@@ -12,8 +12,9 @@ class HatenablogView extends View
     @div class: 'hatena-blog-container', =>
 
       @div class: 'hatena-blog overlay padded', =>
-        @div class: 'hatena-blog-editr', "Hatena Blog Post"
+        @div class: 'hatena-blog-editr', "Hatena Blog Entry Post - Title Editor"
         @subview 'titleEditor', new TextEditorView(mini: true)
+
         @div class: 'result-container', =>
           @span outlet: 'status', class: 'text-subtle status-container', ''
 
@@ -61,11 +62,20 @@ class HatenablogView extends View
   post: ->
     @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
-    @hatenaBlogPost.postEntry (err, response)  =>
+    @hatenaBlogPost.postEntry (response)  =>
+      parseString response, (err, result) =>
         if err
-          text = "#{err}
-                  statusCode: #{response.statusCode}"
+          text = "#{err}"
+
           @status.text text
-          return
-        text = "Successfully Posted!!"
-        @status.text text
+          console.log err
+          console.dir result
+        else
+          console.dir result
+          text = "'#{result.entry.title}' was successfully posted!! " 
+          @status.text text
+
+          entryURL = result.entry.link[1].$.href
+
+          console.log entryURL
+          @titleEditor.setText entryURL
