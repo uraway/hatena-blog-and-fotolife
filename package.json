@@ -18,6 +18,5 @@
     "atom-space-pen-views": "^2.1.0",
     "moment": "^2.11.0",
     "space-pen": "^5.1.1",
-    "superagent": "^1.6.1"
   }
 }
