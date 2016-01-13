@@ -10,7 +10,7 @@ You need the following from [here](http://blog.hatena.ne.jp/my/config/detail).
 ## Post an entry
 open panel by `ctr-alt-p` in the file you want to post, and edit title and chose draft status then click `POST`.
 
-![](http://i.imgur.com/S1osjGn.png)
+![](http://i.imgur.com/YugzuuG.png)
 
 When your entry is successfully posted the entry URL will display in the title editor.
 
