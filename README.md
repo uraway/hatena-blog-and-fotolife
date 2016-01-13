@@ -13,3 +13,5 @@ open panel by `ctr-alt-p` in the file you want to post, and edit title and chose
 ![](http://i.imgur.com/S1osjGn.png)
 
 When your entry is successfully posted the entry URL will display in the title editor.
+
+![](http://i.imgur.com/rxRxmpw.png)
