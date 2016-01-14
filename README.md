@@ -1,17 +1,13 @@
-# HatenaBlogEntryPost package
-post currently file to [Hatena Blog](http://hatenablog.com/)
+# hatena-blog-entry-post
+Quickly and easily post current file or selection from Atom to your [Hatena Blog](http://hatenablog.com/)
 
-## Settings
-You need the following from [here](http://blog.hatena.ne.jp/my/config/detail).
+## Commands
+- **Post Current File (⌥⌘P)** posts the contents of the current file in the editor.
+- **Post Selection (⇧⌥⌘P)** posts the contents of the current selection.
+
+## Required settings
+You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/detail) to post an entry via the package. Copy and paste it into the each settings fields.
+
  - Hatena ID
  - Blog ID
  - API Key
-
-## Post an entry
-open panel by `ctr-alt-p` in the file you want to post, and edit title and chose draft status then click `POST`.
-
-![](http://i.imgur.com/YugzuuG.png)
-
-When your entry is successfully posted the entry URL will display in the title editor.
-
-![](http://i.imgur.com/rxRxmpw.png)
