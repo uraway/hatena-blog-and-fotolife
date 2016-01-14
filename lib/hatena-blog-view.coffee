@@ -1,7 +1,7 @@
 {CompositeDisposable} = require 'atom'
-{View} = require 'space-pen'
-{TextEditorView} = require 'atom-space-pen-views'
+{TextEditorView, View} = require 'atom-space-pen-views'
 {parseString} = require 'xml2js'
+open = require 'open'
 
 HatenaBlogPost = require './hatena-blog-model'
 
@@ -9,73 +9,137 @@ module.exports =
 class HatenablogView extends View
 
   @content: ->
-    @div class: 'hatena-blog-container', =>
+    @div class: 'hatena-blog overlay from-top padded', =>
+      @div class: 'inset-panel', =>
+        @div class: 'panel-heading', =>
+          @span outlet: 'title'
 
-      @div class: 'hatena-blog overlay padded', =>
-        @div class: 'hatena-blog-editr', "Hatena Blog Entry Post - Title Editor"
-        @subview 'titleEditor', new TextEditorView(mini: true)
+        @div class: 'panel-body', =>
+          @div outlet: 'postForm', =>
 
-        @div class: 'result-container', =>
-          @span outlet: 'status', class: 'text-subtle status-container', ''
+            @subview 'titleEditor', new TextEditorView(mini: true)
 
-        @button outlet: 'postButton', class: 'btn', 'POST'
+            @div class: 'btn-group', outlet: 'toolbar', =>
+              @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
+              @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
 
-        @div class: 'btn-toolbar pull-right', outlet: 'toolbar', =>
-          @div class: 'btn-group', =>
-            @button outlet: 'draftButton', class: 'btn', 'Draft'
-            @button outlet: 'publicButton', class: 'btn', 'Public'
+          @div class: 'btn-toolbar pull-right', outlet: 'toolbar', =>
+            @div class: 'btn-group', =>
+              @button outlet: 'draftButton', class: 'btn', 'Draft'
+
+              @button outlet: 'publicButton', class: 'btn', 'Public'
+          @div outlet: 'progressIndicator', =>
+            @span class: 'loading loading-spinner-medium'
 
   initialize: (serializeState) ->
-    @handleEvents()
-    hatenaBlogPost = null
+    @entry = null
+    @subscriptions = new CompositeDisposable
 
-    @hatenaBlogPost = new HatenaBlogPost()
-    @hatenaBlogPost.entryBody = atom.workspace.getActiveTextEditor().getText()
+    @handleEvents()
+
+    atom.commands.add 'atom-text-editor',
+      'hatena-blog:post-current-file': => @postCurrentFile(),
+      'hatena-blog:post-selection': => @postSelection()
 
   # Returns an object that can be retrieved when package is activated
-  #serialize: ->
+  serialize: ->
 
   # Tear down any state and detach
   destroy: ->
     @detach()
     @subscriptions.dispose()
+    atom.views.getView(atom.workspace).focus()
 
   handleEvents: ->
     @draftButton.on 'click', => @entryDraft()
     @publicButton.on 'click', => @entryPublic()
     @postButton.on 'click', => @post()
+    @cancelButton.on 'click', => @destroy()
 
-  entryDraft: ->
+    @subscriptions.add atom.commands.add @titleEditor.element,
+      'core:confirm': => @post()
+      'core:cancel': => @destroy()
 
-    @draftButton.addClass('selected')
-    @publicButton.removeClass('selected')
+    @subscriptions.add atom.commands.add @element,
+      'core:close': => @destroy
+      'core:cancel': => @destroy
 
-    @hatenaBlogPost.isPublic = false
+    @on 'focus', =>
+      @titleEditor.focus()
 
-  entryPublic: ->
+  postCurrentFile: ->
+    activeEditor = atom.workspace.getActiveTextEditor()
+    fileContent = activeEditor.getText()
 
-    @draftButton.removeClass('selected')
-    @publicButton.addClass('selected')
+    if (!!fileContent.trim())
+      @entry = new HatenaBlogPost()
+      @entry.entryBody = fileContent
 
-    @hatenaBlogPost.isPublic = true
+      @title.text 'Post Current File'
+      @presentSelf()
+
+    else
+      atom.notifications.addError('Entry could not be posted: The current file is empty.')
+
+  postSelection: ->
+    activeEditor = atom.workspace.getActiveTextEditor()
+    selectedText = activeEditor.getSelectedText()
+
+    if (!!selectedText.trim())
+      @entry = new HatenaBlogPost()
+
+      @entry.entryBody = selectedText
+
+      @title.text 'Post Selection'
+      @presentSelf()
+    else
+      atom.notifications.addError('Entry could not be created: The current selection is empty.')
+
+  presentSelf: ->
+    @showEntryForm()
+    atom.workspace.addTopPanel(item: this)
+    @titleEditor.focus()
 
   post: ->
-    @hatenaBlogPost.entryTitle = @titleEditor.getText()
+    @showProgressIndicator()
 
-    @hatenaBlogPost.postEntry (response)  =>
+    @entry.entryTitle = @titleEditor.getText()
+
+    @entry.postEntry (response) =>
+      
+      setTimeout (=>
+        @destroy()
+      ), 1000
+
       parseString response, (err, result) =>
-        if err
-          text = "#{err}"
+        entryUrl = result.entry.link[1].$.href
 
-          @status.text text
-          console.log err
-          console.dir result
-        else
-          console.dir result
-          text = "'#{result.entry.title}' was successfully posted!! " 
-          @status.text text
+        atom.notifications.addSuccess("Posted at #{entryUrl}")
 
-          entryURL = result.entry.link[1].$.href
+        if atom.config.get('hatena-blog.openAfterPost')
+          open(entryUrl)
 
-          console.log entryURL
-          @titleEditor.setText entryURL
+
+
+  entryDraft: ->
+    @draftButton.addClass('selected')
+    @publicButton.removeClass('selected')
+    @entry.isPublic = false
+
+  entryPublic: ->
+    @draftButton.removeClass('selected')
+    @publicButton.addClass('selected')
+    @entry.isPublic = true
+
+  showEntryForm: ->
+    if @entry.isPublic then @entryPublic() else @entryDraft
+    @titleEditor.setText @entry.entryTitle
+
+    @toolbar.show()
+    @postForm.show()
+    @progressIndicator.hide()
+
+  showProgressIndicator: ->
+    @toolbar.hide()
+    @postForm.hide()
+    @progressIndicator.show()
