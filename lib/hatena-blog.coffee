@@ -2,41 +2,36 @@
 HatenablogView = require './hatena-blog-view'
 
 module.exports =
-  config:
-    hatenaId:
-      type: 'string'
-      default: ''
-    blogId:
-      type: 'string'
-      default: ''
-    apiKey:
-      type: 'string'
-      default: ''
 
-  hatenaBlogPanel: null
-  subscriptions: null
-  HatenablogView: null
+  hatenablogView: null
 
   activate: (state) ->
-    @hatenaBlogView = new HatenablogView(state.atomHatenablogViewState)
-    @hatenaBlogPanel = atom.workspace.addTopPanel(item: @hatenaBlogView, priority: 0)
-
-    @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.commands.add 'atom-workspace', 'hatena-blog:toggle': =>
-      @toggle()
+    @hatenaBlogView = new HatenablogView(state.hatenaBlogViewState)
 
   deactivate: ->
     @hatenablogView.destroy()
-    @hatenaBlogPanel.destroy()
-    @subscriptions?.dispose()
-    @subscriptions = null
-
 
   serialize: ->
-    atomHatenablogViewState: @hatenablogView.serialize()
+    hatenaBlogViewState: @hatenablogView.serialize()
 
-  toggle: ->
-    if @hatenaBlogPanel.isVisible()
-      @hatenaBlogPanel.hide()
-    else
-      @hatenaBlogPanel.show()
+  config:
+    hatenaId:
+      title: 'Hatena ID'
+      description: 'Your Hatena ID like **uraway**'
+      type: 'string'
+      default: ''
+    blogId:
+      title: 'Blog ID'
+      description: 'Your Blog ID like **uraway.hatenablog.com**'
+      type: 'string'
+      default: ''
+    apiKey:
+      title: 'API Key'
+      description: 'Your API Key. See your account setting page at Hatena Blog.'
+      type: 'string'
+      default: ''
+    openAfterPost:
+      title: 'Open the new Entry after post'
+      description: 'Automatically open newly posted Entry in the default web browser.'
+      type: 'boolean'
+      default: false
