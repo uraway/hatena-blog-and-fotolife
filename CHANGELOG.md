@@ -5,3 +5,7 @@
 ## 0.2.2
 * Display URL feature added
 When an entry is successfully posted, the entry url will display in the title editor.
+
+## 1.0.0
+* Post Selection added
+You can post contents of the selection.

@@ -2,6 +2,7 @@
 {TextEditorView, View} = require 'atom-space-pen-views'
 {parseString} = require 'xml2js'
 open = require 'open'
+stripBom = require 'strip-bom'
 
 HatenaBlogPost = require './hatena-blog-model'
 
@@ -32,7 +33,7 @@ class HatenablogView extends View
             @span class: 'loading loading-spinner-medium'
 
   initialize: (serializeState) ->
-    @entry = null
+    @hatenaBlogPost = null
     @subscriptions = new CompositeDisposable
 
     @handleEvents()
@@ -56,14 +57,6 @@ class HatenablogView extends View
     @postButton.on 'click', => @post()
     @cancelButton.on 'click', => @destroy()
 
-    @subscriptions.add atom.commands.add @titleEditor.element,
-      'core:confirm': => @post()
-      'core:cancel': => @destroy()
-
-    @subscriptions.add atom.commands.add @element,
-      'core:close': => @destroy
-      'core:cancel': => @destroy
-
     @on 'focus', =>
       @titleEditor.focus()
 
@@ -72,8 +65,8 @@ class HatenablogView extends View
     fileContent = activeEditor.getText()
 
     if (!!fileContent.trim())
-      @entry = new HatenaBlogPost()
-      @entry.entryBody = fileContent
+      @hatenaBlogPost = new HatenaBlogPost()
+      @hatenaBlogPost.entryBody = fileContent
 
       @title.text 'Post Current File'
       @presentSelf()
@@ -86,9 +79,9 @@ class HatenablogView extends View
     selectedText = activeEditor.getSelectedText()
 
     if (!!selectedText.trim())
-      @entry = new HatenaBlogPost()
+      @hatenaBlogPost = new HatenaBlogPost()
 
-      @entry.entryBody = selectedText
+      @hatenaBlogPost.entryBody = selectedText
 
       @title.text 'Post Selection'
       @presentSelf()
@@ -103,37 +96,36 @@ class HatenablogView extends View
   post: ->
     @showProgressIndicator()
 
-    @entry.entryTitle = @titleEditor.getText()
+    @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
-    @entry.postEntry (response) =>
-      
+    @hatenaBlogPost.postEntry (response) =>
+      parseString response, (err, result) =>
+        if err
+          atom.notifications.addError("#{err}", dismissable: true)
+        else
+          entryUrl = result.entry.link[1].$.href
+          entry_Title = result.entry.title
+          atom.notifications.addSuccess("Posted #{entry_Title} at #{entryUrl}", dismissable: true)
+
       setTimeout (=>
         @destroy()
       ), 1000
-
-      parseString response, (err, result) =>
-        entryUrl = result.entry.link[1].$.href
-
-        atom.notifications.addSuccess("Posted at #{entryUrl}")
-
-        if atom.config.get('hatena-blog.openAfterPost')
-          open(entryUrl)
 
 
 
   entryDraft: ->
     @draftButton.addClass('selected')
     @publicButton.removeClass('selected')
-    @entry.isPublic = false
+    @hatenaBlogPost.isPublic = false
 
   entryPublic: ->
     @draftButton.removeClass('selected')
     @publicButton.addClass('selected')
-    @entry.isPublic = true
+    @hatenaBlogPost.isPublic = true
 
   showEntryForm: ->
-    if @entry.isPublic then @entryPublic() else @entryDraft
-    @titleEditor.setText @entry.entryTitle
+    if @hatenaBlogPost.isPublic then @entryPublic() else @entryDraft()
+    @titleEditor.setText @hatenaBlogPost.entryTitle
 
     @toolbar.show()
     @postForm.show()

@@ -7,7 +7,10 @@
     "Hatena Blog"
   ],
   "activationCommands": {
-    "atom-workspace": "hatena-blog:toggle"
+    "atom-workspace": [
+      "hatena-blog:post-current-file",
+      "hatena-blog:post-selection"
+    ]
   },
   "repository": "https://github.com/uraway/hatena-blog-entry-post",
   "license": "MIT",
@@ -19,6 +22,7 @@
     "moment": "^2.11.0",
     "open": "0.0.5",
     "space-pen": "^5.1.1",
+    "strip-bom": "^2.0.0",
     "underscore": "^1.8.3",
     "xml2js": "^0.4.15"
   }

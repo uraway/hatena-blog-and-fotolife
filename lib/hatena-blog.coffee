@@ -30,8 +30,3 @@ module.exports =
       description: 'Your API Key. See your account setting page at Hatena Blog.'
       type: 'string'
       default: ''
-    openAfterPost:
-      title: 'Open the new Entry after post'
-      description: 'Automatically open newly posted Entry in the default web browser.'
-      type: 'boolean'
-      default: false

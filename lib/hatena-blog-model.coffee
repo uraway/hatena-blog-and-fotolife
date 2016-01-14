@@ -2,6 +2,7 @@ moment = require('moment')
 https = require 'https'
 request = require 'request'
 _ = require 'underscore'
+stripBom = require 'strip-bom'
 
 module.exports = class HatenaBlogPost
   constructor: ->
@@ -22,7 +23,7 @@ module.exports = class HatenaBlogPost
     draft = if @isPublic then 'no' else 'yes'
 
     requestBody = """
-      <?xml version="1.0" encoding="utf-8"?>
+      <?xml version="1.0" encoding="UTF-8"?>
       <entry xmlns="http://www.w3.org/2005/Atom"
              xmlns:app="http://www.w3.org/2007/app">
         <title>#{@entryTitle}</title>
@@ -50,6 +51,7 @@ module.exports = class HatenaBlogPost
         body += chunk
       res.on "end", ->
         callback(body)
+
 
     request.write requestBody
     request.end()
