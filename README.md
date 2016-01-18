@@ -15,4 +15,4 @@ You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/de
  - API Key
 
 ## Recommended package when you write markdown text to post it via *hatena-blog-entry-post*
-- **[image-copipe](https://atom.io/packages/image-copipe) ** by sagaraya -  Easy image uploads. Copy and paste image to markdown.
+- **[image-copipe](https://atom.io/packages/image-copipe)** by sagaraya -  Easy image uploads. Copy and paste image to markdown.
