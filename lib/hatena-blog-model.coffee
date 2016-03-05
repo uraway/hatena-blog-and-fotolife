@@ -2,7 +2,6 @@ moment = require('moment')
 https = require 'https'
 request = require 'request'
 _ = require 'underscore'
-stripBom = require 'strip-bom'
 
 module.exports = class HatenaBlogPost
   constructor: ->

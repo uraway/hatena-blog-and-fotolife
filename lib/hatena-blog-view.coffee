@@ -1,8 +1,7 @@
 {CompositeDisposable} = require 'atom'
 {TextEditorView, View} = require 'atom-space-pen-views'
-{parseString} = require 'xml2js'
 open = require 'open'
-stripBom = require 'strip-bom'
+{parseString} = 'xml2js'
 
 HatenaBlogPost = require './hatena-blog-model'
 
