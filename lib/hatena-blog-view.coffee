@@ -1,7 +1,6 @@
 {CompositeDisposable} = require 'atom'
 {TextEditorView, View} = require 'atom-space-pen-views'
 open = require 'open'
-{parseString} = 'xml2js'
 
 HatenaBlogPost = require './hatena-blog-model'
 
@@ -9,8 +8,9 @@ module.exports =
 class HatenablogView extends View
 
   @content: ->
-    @div class: 'hatena-blog overlay from-top padded', =>
+    @div class: 'hatena-blog overlay tool-panel padded', =>
       @div class: 'inset-panel', =>
+
         @div class: 'panel-heading', =>
           @span outlet: 'title'
 
@@ -30,6 +30,9 @@ class HatenablogView extends View
               @button outlet: 'publicButton', class: 'btn', 'Public'
           @div outlet: 'progressIndicator', =>
             @span class: 'loading loading-spinner-medium'
+
+        @div outlet: 'cancel', =>
+          @button outlet: 'cancelButton', class: 'btn', 'CANCEL'
 
   initialize: (serializeState) ->
     @hatenaBlogPost = null
@@ -97,20 +100,22 @@ class HatenablogView extends View
 
     @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
-    @hatenaBlogPost.postEntry (response) =>
-      parseString response, (err, result) =>
-        if err
-          atom.notifications.addError("#{err}", dismissable: true)
-        else
-          entryUrl = result.entry.link[1].$.href
-          entry_Title = result.entry.title
-          atom.notifications.addSuccess("Posted #{entry_Title} at #{entryUrl}", dismissable: true)
+    @hatenaBlogPost.postEntry (res, err) =>
+      if err
+        atom.notifications.addError("#{err}", dismissable: true)
+        console.log err
+      else
+        entryURL = res.entry.link[1].$.href
+        atom.notifications.addSuccess("Posted at #{entryURL}", dismissable: true)
+        console.log res
 
-      setTimeout (=>
-        @destroy()
-      ), 1000
+        if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
+          console.log "open #{entryURL}"
+          open "#{entryURL}"
 
-
+    setTimeout (=>
+      @destroy()
+    ), 1000
 
   entryDraft: ->
     @draftButton.addClass('selected')
@@ -130,7 +135,11 @@ class HatenablogView extends View
     @postForm.show()
     @progressIndicator.hide()
 
+    @cancelButton.hide()
+
   showProgressIndicator: ->
     @toolbar.hide()
     @postForm.hide()
     @progressIndicator.show()
+
+    @cancelButton.show()
