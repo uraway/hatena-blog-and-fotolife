@@ -1,4 +1,3 @@
-{CompositeDisposable} = require 'atom'
 HatenablogView = require './hatena-blog-view'
 
 module.exports =
@@ -17,16 +16,21 @@ module.exports =
   config:
     hatenaId:
       title: 'Hatena ID'
-      description: 'Your Hatena ID like **uraway**'
+      description: 'Your Hatena ID'
       type: 'string'
-      default: ''
+      default: ""
     blogId:
       title: 'Blog ID'
-      description: 'Your Blog ID like **uraway.hatenablog.com**'
+      description: 'Your Blog ID',
       type: 'string'
-      default: ''
+      default: ""
     apiKey:
       title: 'API Key'
       description: 'Your API Key. See your account setting page at Hatena Blog.'
       type: 'string'
-      default: ''
+      default: ""
+    openAfterPost:
+      title: 'Open After Post'
+      description: 'After your entry successfully posted, the default web browser open its URL.'
+      type: 'boolean'
+      default: false
