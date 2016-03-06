@@ -6,9 +6,9 @@ HatenaBlogPost = require './hatena-blog-model'
 
 module.exports =
 class HatenablogView extends View
-
+  category: ['Atom', 'はてな']
   @content: ->
-    @div class: 'hatena-blog overlay tool-panel padded', =>
+    @div class: 'hatena-blog panel overlay from-top', =>
       @div class: 'inset-panel', =>
 
         @div class: 'panel-heading', =>
@@ -16,29 +16,31 @@ class HatenablogView extends View
 
         @div class: 'panel-body', =>
           @div outlet: 'postForm', =>
+            @subview 'titleEditor', new TextEditorView(mini: true, placeholderText: 'Entry Title')
 
-            @subview 'titleEditor', new TextEditorView(mini: true)
+            @div class: 'btn-group', =>
+              @button outlet: 'draftButton', class: 'btn', 'Draft'
+              @button outlet: 'publicButton', class: 'btn', 'Public'
 
-            @div class: 'btn-group', outlet: 'toolbar', =>
+            @div class: 'btn-group pull-right', outlet: 'toolbar', =>
               @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
               @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
 
-          @div class: 'btn-toolbar pull-right', outlet: 'toolbar', =>
-            @div class: 'btn-group', =>
-              @button outlet: 'draftButton', class: 'btn', 'Draft'
+            @div class: 'category-container', =>
+              @subview 'categoryEditor', new TextEditorView(mini: true, placeholderText: 'Add a new category item...' )
+              @span outlet: 'categoryList'
 
-              @button outlet: 'publicButton', class: 'btn', 'Public'
           @div outlet: 'progressIndicator', =>
             @span class: 'loading loading-spinner-medium'
-
-        @div outlet: 'cancel', =>
-          @button outlet: 'cancelButton', class: 'btn', 'CANCEL'
 
   initialize: (serializeState) ->
     @hatenaBlogPost = null
     @subscriptions = new CompositeDisposable
-
     @handleEvents()
+
+    # render category items above the category editor
+    for key in @category
+      @categoryList.append("#{key}/")
 
     atom.commands.add 'atom-text-editor',
       'hatena-blog:post-current-file': => @postCurrentFile(),
@@ -53,16 +55,42 @@ class HatenablogView extends View
     @subscriptions.dispose()
     atom.views.getView(atom.workspace).focus()
 
+  deactivate: ->
+    @destroy()
+
   handleEvents: ->
     @draftButton.on 'click', => @entryDraft()
     @publicButton.on 'click', => @entryPublic()
     @postButton.on 'click', => @post()
     @cancelButton.on 'click', => @destroy()
+    @categoryList.on 'click', => @deleteCategoryItem()
+    @categoryEditor.on 'keydown', event, => @addCategoryItem(event, @categoryEditor.getText())
 
     @on 'focus', =>
       @titleEditor.focus()
 
-  postCurrentFile: ->
+  # delete last item of the category array
+  deleteCategoryItem: () ->
+    @category.pop()
+
+    # render category items above the category editor after initializing the content
+    @categoryList.empty()
+    for key in @category
+      @categoryList.append("#{key}/")
+
+  addCategoryItem: (event, item) ->
+    if (event.keyCode is 13)
+      console.log item
+      @category.push item
+      @categoryEditor.setText("")
+
+      # render category items above the category editor after initializing the content
+      @categoryList.empty()
+      console.log @category
+      for key in @category
+        @categoryList.append("#{key}/")
+
+  postCurrentFile: () ->
     activeEditor = atom.workspace.getActiveTextEditor()
     fileContent = activeEditor.getText()
 
@@ -98,8 +126,13 @@ class HatenablogView extends View
   post: ->
     @showProgressIndicator()
 
+    # set categoy item
+    @hatenaBlogPost.categories = @category
+
+    # set entry title
     @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
+    # post entry and parse response
     @hatenaBlogPost.postEntry (res, err) =>
       if err
         atom.notifications.addError("#{err}", dismissable: true)
@@ -113,20 +146,24 @@ class HatenablogView extends View
           console.log "open #{entryURL}"
           open "#{entryURL}"
 
+    # timeout is needed when error occures
     setTimeout (=>
       @destroy()
     ), 1000
 
+  # draft button switched
   entryDraft: ->
     @draftButton.addClass('selected')
     @publicButton.removeClass('selected')
     @hatenaBlogPost.isPublic = false
 
+  # public button switched
   entryPublic: ->
     @draftButton.removeClass('selected')
     @publicButton.addClass('selected')
     @hatenaBlogPost.isPublic = true
 
+  # toggle this package when the Form is hidden
   showEntryForm: ->
     if @hatenaBlogPost.isPublic then @entryPublic() else @entryDraft()
     @titleEditor.setText @hatenaBlogPost.entryTitle
@@ -135,11 +172,8 @@ class HatenablogView extends View
     @postForm.show()
     @progressIndicator.hide()
 
-    @cancelButton.hide()
-
+  # show indicator after post
   showProgressIndicator: ->
     @toolbar.hide()
     @postForm.hide()
     @progressIndicator.show()
-
-    @cancelButton.show()

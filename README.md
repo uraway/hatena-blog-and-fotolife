@@ -10,9 +10,15 @@ Quickly and easily post current file or selection from Atom to your [Hatena Blog
 ## Required settings
 You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/detail) to post an entry via the package. Copy and paste it into the each settings fields.
 
- - Hatena ID
- - Blog ID
- - API Key
+- Hatena ID
+- Blog ID
+- API Key
+
+## Optional settings
+
+- Open After Post
+
+If it is enabled, it opens the URL after you post the entry.
 
 ## Recommended package when you write markdown text to post it via *hatena-blog-entry-post*
 - **[image-copipe](https://atom.io/packages/image-copipe)** by sagaraya -  Easy image uploads. Copy and paste image to markdown.
