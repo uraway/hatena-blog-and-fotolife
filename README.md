@@ -1,14 +1,29 @@
 # hatena-blog-entry-post
-Quickly and easily post current file or selection from Atom to your [Hatena Blog](http://hatenablog.com/)
+Quickly and easily post current file or selection from Atom to your [Hatena Blog](http://hatenablog.com/) and upload images to your [fotolife](http://f.hatena.ne.jp/)
 
-![](https://zippy.gfycat.com/IcyPotableHackee.gif)
+## post entry
+
+![](https://zippy.gfycat.com/BonyDefiniteGoa.gif)
+
+You can handle:
+- title
+- category
+- draft status
+
+#### edit category
+- Enter to add category item
+- Click the item to delete category from the list
+
+## upload images
+
+![](https://zippy.gfycat.com/HardtofindDampIrishredandwhitesetter.gif)
 
 ## Commands
 - **Post Current File (⌥⌘P)** posts the contents of the current file in the editor.
 - **Post Selection (⇧⌥⌘P)** posts the contents of the current selection.
 
 ## Required settings
-You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/detail) to post an entry via the package. Copy and paste it into the each settings fields.
+You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/detail) to post an entry via the package. Copy and paste it into the each settings fields. If you want to upload images to your fotolife, Hatena ID and API Key is needed.
 
 - Hatena ID
 - Blog ID
@@ -19,6 +34,3 @@ You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/de
 - Open After Post
 
 If it is enabled, it opens the URL after you post the entry.
-
-## Recommended package when you write markdown text to post it via *hatena-blog-entry-post*
-- **[image-copipe](https://atom.io/packages/image-copipe)** by sagaraya -  Easy image uploads. Copy and paste image to markdown.

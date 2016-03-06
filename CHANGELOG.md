@@ -12,4 +12,9 @@ You can post contents of the selection.
 
 ## 1.1.0
 * Open Entry URL After Post
-If it is enabled, it opens the entry URL at the browser immediately after you post the entry. 
+If it is enabled, it opens the entry URL at the browser immediately after you post the entry.
+
+## 1.4.0
+* Image Uploader to fotolife
+You can upload images to your fotolife.
+(hatena ID and apiKey is required)

@@ -6,17 +6,24 @@ HatenaBlogPost = require './hatena-blog-model'
 
 module.exports =
 class HatenablogView extends View
-  category: ['Atom', 'はてな']
+  category: []
+  image: null
   @content: ->
     @div class: 'hatena-blog panel overlay from-top', =>
       @div class: 'inset-panel', =>
 
         @div class: 'panel-heading', =>
           @span outlet: 'title'
+          @input style: 'display:none;', type: 'file', outlet: 'file', accept: 'image/*'
+          @a href: '#', outlet: 'fileSelect', class: 'icon icon-cloud-upload pull-right'
 
         @div class: 'panel-body', =>
           @div outlet: 'postForm', =>
-            @subview 'titleEditor', new TextEditorView(mini: true, placeholderText: 'Entry Title')
+            @subview 'titleEditor', new TextEditorView(mini: true, placeholderText: 'Edit title...')
+
+            @div class: 'category-container', =>
+              @span outlet: 'categoryList'
+              @subview 'categoryEditor', new TextEditorView(mini: true, placeholderText: 'Add a new category item...' )
 
             @div class: 'btn-group', =>
               @button outlet: 'draftButton', class: 'btn', 'Draft'
@@ -25,10 +32,6 @@ class HatenablogView extends View
             @div class: 'btn-group pull-right', outlet: 'toolbar', =>
               @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
               @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
-
-            @div class: 'category-container', =>
-              @subview 'categoryEditor', new TextEditorView(mini: true, placeholderText: 'Add a new category item...' )
-              @span outlet: 'categoryList'
 
           @div outlet: 'progressIndicator', =>
             @span class: 'loading loading-spinner-medium'
@@ -65,9 +68,22 @@ class HatenablogView extends View
     @cancelButton.on 'click', => @destroy()
     @categoryList.on 'click', => @deleteCategoryItem()
     @categoryEditor.on 'keydown', event, => @addCategoryItem(event, @categoryEditor.getText())
+    @file.on 'change', => @uploadImage()
+
+    # file element click event handler
+    @fileSelect.on "click", event, =>
+      @file.click()  if @file
+      event.preventDefault() # "#" に移動するのを防ぐ
+      false
 
     @on 'focus', =>
       @titleEditor.focus()
+
+  # upload image to fotolife
+  uploadImage: () ->
+    @image = @file[0].files[0].path
+
+    @hatenaBlogPost.uploadImage @image
 
   # delete last item of the category array
   deleteCategoryItem: () ->
