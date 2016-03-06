@@ -1,7 +1,7 @@
 # hatena-blog-entry-post
 Quickly and easily post current file or selection from Atom to your [Hatena Blog](http://hatenablog.com/) and upload images to your [fotolife](http://f.hatena.ne.jp/)
 
-## post entry
+## post an entry
 
 ![](https://zippy.gfycat.com/BonyDefiniteGoa.gif)
 
@@ -10,11 +10,11 @@ You can handle:
 - category
 - draft status
 
-#### edit category
+#### edit a category
 - Enter to add category item
 - Click the item to delete category from the list
 
-## upload images
+## upload an image
 
 ![](https://zippy.gfycat.com/HardtofindDampIrishredandwhitesetter.gif)
 
@@ -33,4 +33,4 @@ You need to get the followings from [here](http://blog.hatena.ne.jp/my/config/de
 
 - Open After Post
 
-If it is enabled, it opens the URL after you post the entry.
+  If it is enabled, it opens the URL after you post the entry.
