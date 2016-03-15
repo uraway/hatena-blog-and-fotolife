@@ -1,4 +1,5 @@
 HatenablogView = require './hatena-blog-view'
+EntryListView = require './entry-list-view'
 
 module.exports =
 
@@ -6,12 +7,15 @@ module.exports =
 
   activate: (state) ->
     @hatenaBlogView = new HatenablogView(state.hatenaBlogViewState)
+    @entryListView = new EntryListView(state.entryListViewState)
 
   deactivate: ->
     @hatenablogView.destroy()
+    @entryListView.destroy()
 
   serialize: ->
     hatenaBlogViewState: @hatenablogView.serialize()
+    entryListViewState: @entryListView.serialize()
 
   config:
     hatenaId:

@@ -4,12 +4,16 @@
   "version": "2.0.1",
   "description": "post a Hatena Blog entry",
   "keywords": [
-    "Hatena Blog"
+    "Hatena Blog",
+    "markdown",
+    "Hatena fotolife",
+    "image upload"
   ],
   "activationCommands": {
     "atom-workspace": [
-      "hatena-blog:post-current-file",
-      "hatena-blog:post-selection"
+      "hatena-blog-entry-post:post-current-file",
+      "hatena-blog-entry-post:post-selection",
+      "hatena-blog-entry-post:entry-list"
     ]
   },
   "repository": "https://github.com/uraway/hatena-blog-entry-post",

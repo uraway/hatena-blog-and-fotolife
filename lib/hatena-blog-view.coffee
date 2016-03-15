@@ -46,8 +46,8 @@ class HatenablogView extends View
       @categoryList.append("#{key}/")
 
     atom.commands.add 'atom-text-editor',
-      'hatena-blog:post-current-file': => @postCurrentFile(),
-      'hatena-blog:post-selection': => @postSelection()
+      'hatena-blog-entry-post:post-current-file': => @postCurrentFile(),
+      'hatena-blog-entry-post:post-selection': => @postSelection()
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -96,13 +96,11 @@ class HatenablogView extends View
 
   addCategoryItem: (event, item) ->
     if (event.keyCode is 13)
-      console.log item
       @category.push item
       @categoryEditor.setText("")
 
       # render category items above the category editor after initializing the content
       @categoryList.empty()
-      console.log @category
       for key in @category
         @categoryList.append("#{key}/")
 
