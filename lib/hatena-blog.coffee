@@ -20,8 +20,8 @@ module.exports =
       type: 'string'
       default: ""
     blogId:
-      title: 'Blog ID'
-      description: 'Your Blog ID',
+      title: 'Blog URL'
+      description: 'Your Blog URL',
       type: 'string'
       default: ""
     apiKey:
