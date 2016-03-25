@@ -1,7 +1,7 @@
 {
   "name": "hatena-blog-entry-post",
   "main": "./lib/hatena-blog",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "post a Hatena Blog entry",
   "keywords": [
     "Hatena Blog"
