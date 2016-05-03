@@ -42,6 +42,9 @@ module.exports = class HatenaBlogPost
         markdown = "![](#{imageurl})"
         editor.setTextInBufferRange(range[0], markdown)
 
+  parseEntryId: (id) ->
+    return id._.match(/^tag:[^:]+:[^-]+-[^-]+-\d+-(\d+)$/)[1]
+
   postEntry: (callback) ->
     client = blog(
       type: 'wsse'
@@ -51,6 +54,28 @@ module.exports = class HatenaBlogPost
     )
 
     client.create {
+      title: @entryTitle
+      content: @entryBody
+      categories: @categories
+      draft: !@isPublic
+    }, (err, res) =>
+      if err
+        callback res, err
+      else
+        @entryId = @parseEntryId(res.entry.id)
+        callback res, err
+      return
+
+  updateEntry: (callback) ->
+    client = blog(
+      type: 'wsse'
+      username: @getHatenaId()
+      blogId:   @getBlogId()
+      apikey:   @getApiKey()
+    )
+
+    client.update {
+      id: @entryId
       title: @entryTitle
       content: @entryBody
       categories: @categories
