@@ -8,10 +8,10 @@ module.exports =
     @hatenaBlogView = new HatenablogView(state.hatenaBlogViewState)
 
   deactivate: ->
-    @hatenablogView.destroy()
+    @hatenaBlogView.destroy()
 
   serialize: ->
-    hatenaBlogViewState: @hatenablogView.serialize()
+    hatenaBlogViewState: @hatenaBlogView.serialize()
 
   config:
     hatenaId:
