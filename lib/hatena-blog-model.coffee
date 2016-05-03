@@ -53,12 +53,7 @@ module.exports = class HatenaBlogPost
     client.create {
       title: @entryTitle
       content: @entryBody
-
       categories: @categories
       draft: !@isPublic
     }, (err, res) ->
-      if err
-        callback err
-      else
-        callback res
-      return
+      callback res, err
