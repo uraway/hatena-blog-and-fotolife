@@ -118,7 +118,11 @@ class HatenablogView extends View
 
     if (!!fileContent.trim())
       @hatenaBlogPost = new HatenaBlogPost()
-      @hatenaBlogPost.entryBody = @removeTitle(@removeContextComment(fileContent))
+
+      if atom.config.get('hatena-blog-entry-post.removeTitle') is true
+        @hatenaBlogPost.entryBody = @removeTitle(@removeContextComment(fileContent))
+      else
+        @hatenaBlogPost.entryBody = @removeContextComment(fileContent)
 
       @title.text 'Post Current File'
       @presentSelf()
@@ -177,7 +181,7 @@ class HatenablogView extends View
           })
         console.log res
 
-        if atom.config.get('hatena-blog.openAfterPost') is true
+        if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
           console.log "open #{entryURL}"
           open "#{entryURL}"
 
@@ -254,7 +258,7 @@ class HatenablogView extends View
     else
       @updateButton.hide()
       @postButton.show()
-    
+
     @titleEditor.setText @hatenaBlogPost.entryTitle
 
     @toolbar.show()

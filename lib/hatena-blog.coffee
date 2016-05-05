@@ -34,3 +34,8 @@ module.exports =
       description: 'After your entry successfully posted, the default web browser open its URL.'
       type: 'boolean'
       default: false
+    removeTitle:
+      title: 'Remove Title'
+      description: 'Remove the title(#) from your entry content'
+      type: 'boolean'
+      default: true
