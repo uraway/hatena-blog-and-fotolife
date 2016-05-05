@@ -33,6 +33,7 @@ class HatenablogView extends View
 
             @div class: 'btn-group pull-right', outlet: 'toolbar', =>
               @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
+              @button outlet: 'updateButton', class: 'btn btn-primary inline-block-tight', 'UPDATE'
               @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
 
           @div outlet: 'progressIndicator', =>
@@ -67,6 +68,7 @@ class HatenablogView extends View
     @draftButton.on 'click', => @entryDraft()
     @publicButton.on 'click', => @entryPublic()
     @postButton.on 'click', => @postOrUpdate()
+    @updateButton.on 'click', => @postOrUpdate()
     @cancelButton.on 'click', => @destroy()
     @categoryList.on 'click', => @deleteCategoryItem()
     @categoryEditor.on 'keydown', event, => @addCategoryItem(event, @categoryEditor.getText())
@@ -245,11 +247,20 @@ class HatenablogView extends View
       @entryPublic()
     else
       @entryDraft()
+
+    if @hatenaBlogPost.entryId
+      @postButton.hide()
+      @updateButton.show()
+    else
+      @updateButton.hide()
+      @postButton.show()
+    
     @titleEditor.setText @hatenaBlogPost.entryTitle
 
     @toolbar.show()
     @postForm.show()
     @progressIndicator.hide()
+
 
   # show indicator after post
   showProgressIndicator: ->
