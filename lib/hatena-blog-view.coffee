@@ -272,9 +272,9 @@ class HatenablogView extends View
 
   saveContext: (context) ->
     comment = [
-      '<!---',
+      '<!--',
       JSON.stringify(context),
-      '--->'
+      '-->'
     ].join('\n')
     activeEditor = atom.workspace.getActiveTextEditor()
     fileContent = @removeContextComment activeEditor.getText()
