@@ -142,7 +142,7 @@ class HatenablogView extends View
       @title.text 'Post Selection'
       @presentSelf()
     else
-      atom.notifications.addError('Entry could not be created: The current selection is empty.')
+      atom.notifications.addError('Entry could not be posted: The current selection is empty.')
 
   presentSelf: ->
     @showEntryForm()
