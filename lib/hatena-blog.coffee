@@ -8,10 +8,10 @@ module.exports =
     @hatenaBlogView = new HatenablogView(state.hatenaBlogViewState)
 
   deactivate: ->
-    @hatenablogView.destroy()
+    @hatenaBlogView.destroy()
 
   serialize: ->
-    hatenaBlogViewState: @hatenablogView.serialize()
+    hatenaBlogViewState: @hatenaBlogView.serialize()
 
   config:
     hatenaId:
@@ -26,11 +26,16 @@ module.exports =
       default: ""
     apiKey:
       title: 'API Key'
-      description: 'Your API Key. See your account setting page at Hatena Blog.'
+      description: 'Your API Key. See your account setting page at Hatena Blog'
       type: 'string'
       default: ""
     openAfterPost:
       title: 'Open After Post'
-      description: 'After your entry successfully posted, the default web browser open its URL.'
+      description: 'After your entry was successfully posted, the default web browser opens the URL'
       type: 'boolean'
       default: false
+    removeTitle:
+      title: 'Remove Title'
+      description: 'Remove the title(#) from your entry content'
+      type: 'boolean'
+      default: true

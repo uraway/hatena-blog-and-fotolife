@@ -6,6 +6,8 @@ HatenaBlogPost = require './hatena-blog-model'
 
 module.exports =
 class HatenablogView extends View
+  titleRegExp: /^ *# (.*)/
+  contextCommentRegExp: /^<!--([\s\S]*?)-->\n?/
   category: []
   image: null
   @content: ->
@@ -31,6 +33,7 @@ class HatenablogView extends View
 
             @div class: 'btn-group pull-right', outlet: 'toolbar', =>
               @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
+              @button outlet: 'updateButton', class: 'btn btn-primary inline-block-tight', 'UPDATE'
               @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
 
           @div outlet: 'progressIndicator', =>
@@ -64,7 +67,8 @@ class HatenablogView extends View
   handleEvents: ->
     @draftButton.on 'click', => @entryDraft()
     @publicButton.on 'click', => @entryPublic()
-    @postButton.on 'click', => @post()
+    @postButton.on 'click', => @postOrUpdate()
+    @updateButton.on 'click', => @postOrUpdate()
     @cancelButton.on 'click', => @destroy()
     @categoryList.on 'click', => @deleteCategoryItem()
     @categoryEditor.on 'keydown', event, => @addCategoryItem(event, @categoryEditor.getText())
@@ -101,10 +105,12 @@ class HatenablogView extends View
       @categoryEditor.setText("")
 
       # render category items above the category editor after initializing the content
-      @categoryList.empty()
-      console.log @category
-      for key in @category
-        @categoryList.append("#{key}/")
+      @renderCategoryItem()
+
+  renderCategoryItem: () ->
+    @categoryList.empty()
+    for key in @category
+      @categoryList.append("#{key}/")
 
   postCurrentFile: () ->
     activeEditor = atom.workspace.getActiveTextEditor()
@@ -112,7 +118,11 @@ class HatenablogView extends View
 
     if (!!fileContent.trim())
       @hatenaBlogPost = new HatenaBlogPost()
-      @hatenaBlogPost.entryBody = fileContent
+
+      if atom.config.get('hatena-blog-entry-post.removeTitle') is true
+        @hatenaBlogPost.entryBody = @removeTitle(@removeContextComment(fileContent))
+      else
+        @hatenaBlogPost.entryBody = @removeContextComment(fileContent)
 
       @title.text 'Post Current File'
       @presentSelf()
@@ -132,12 +142,53 @@ class HatenablogView extends View
       @title.text 'Post Selection'
       @presentSelf()
     else
-      atom.notifications.addError('Entry could not be created: The current selection is empty.')
+      atom.notifications.addError('Entry could not be posted: The current selection is empty.')
 
   presentSelf: ->
     @showEntryForm()
     atom.workspace.addTopPanel(item: this)
     @titleEditor.focus()
+
+  postOrUpdate: ->
+    if @hatenaBlogPost.entryId
+      console.log('Update entry ' + @hatenaBlogPost.entryId)
+      @update()
+    else
+      console.log('Post new entry')
+      @post()
+
+  update: ->
+    @showProgressIndicator()
+
+    # set categoy item
+    @hatenaBlogPost.categories = @category
+
+    # set entry title
+    @hatenaBlogPost.entryTitle = @titleEditor.getText()
+
+    # post entry and parse response
+    @hatenaBlogPost.updateEntry (res, err) =>
+      if err
+        atom.notifications.addError("#{err}", dismissable: true)
+        console.log err
+      else
+        entryURL = res.entry.link[1].$.href
+        atom.notifications.addSuccess("Updated #{entryURL}", dismissable: true)
+        @saveContext({
+          id: @hatenaBlogPost.entryId,
+          title: @hatenaBlogPost.entryTitle,
+          categories: @hatenaBlogPost.categories
+          })
+        console.log res
+
+        if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
+          console.log "open #{entryURL}"
+          open "#{entryURL}"
+
+    # timeout is needed when error occures
+    setTimeout (=>
+      @destroy()
+    ), 1000
 
   post: ->
     @showProgressIndicator()
@@ -156,6 +207,11 @@ class HatenablogView extends View
       else
         entryURL = res.entry.link[1].$.href
         atom.notifications.addSuccess("Posted at #{entryURL}", dismissable: true)
+        @saveContext({
+          id: @hatenaBlogPost.entryId,
+          title: @hatenaBlogPost.entryTitle,
+          categories: @hatenaBlogPost.categories
+          })
         console.log res
 
         if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
@@ -181,15 +237,77 @@ class HatenablogView extends View
 
   # toggle this package when the Form is hidden
   showEntryForm: ->
-    if @hatenaBlogPost.isPublic then @entryPublic() else @entryDraft()
+    context = @parseContext()
+    @hatenaBlogPost.entryTitle = @getTitle()
+    if context.id?
+      @hatenaBlogPost.entryId = context.id
+    if context.title?
+      @hatenaBlogPost.entryTitle = context.title
+    if context.categories?
+      @hatenaBlogPost.categories = context.categories
+      @category = context.categories
+      @renderCategoryItem()
+    if @hatenaBlogPost.isPublic
+      @entryPublic()
+    else
+      @entryDraft()
+
+    if @hatenaBlogPost.entryId
+      @postButton.hide()
+      @updateButton.show()
+    else
+      @updateButton.hide()
+      @postButton.show()
+
     @titleEditor.setText @hatenaBlogPost.entryTitle
 
     @toolbar.show()
     @postForm.show()
     @progressIndicator.hide()
 
+
   # show indicator after post
   showProgressIndicator: ->
     @toolbar.hide()
     @postForm.hide()
     @progressIndicator.show()
+
+  parseContext: ->
+    activeEditor = atom.workspace.getActiveTextEditor()
+    fileContent = activeEditor.getText()
+    comment = fileContent.match @contextCommentRegExp
+    try
+      if comment
+        return JSON.parse(comment[1])
+      else
+        return {}
+    catch err
+      console.log err
+      return {}
+
+  saveContext: (context) ->
+    comment = [
+      '<!--',
+      JSON.stringify(context),
+      '-->'
+    ].join('\n')
+    activeEditor = atom.workspace.getActiveTextEditor()
+    fileContent = @removeContextComment activeEditor.getText()
+    # add new context comment
+    fileContent = [comment, fileContent].join('\n')
+    activeEditor.setText(fileContent)
+
+  removeContextComment: (content) ->
+    return content.replace @contextCommentRegExp, ''
+
+  getTitle: ->
+    activeEditor = atom.workspace.getActiveTextEditor()
+    fileContent = @removeContextComment activeEditor.getText()
+    title = fileContent.match @titleRegExp
+    if title
+      return title[1].trim()
+    else
+      return ""
+
+  removeTitle: (content) ->
+    return content.replace(@titleRegExp, '').trim()
