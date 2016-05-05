@@ -7,7 +7,7 @@ HatenaBlogPost = require './hatena-blog-model'
 module.exports =
 class HatenablogView extends View
   titleRegExp: /^ *# (.*)/
-  contextCommentRegExp: /^<!---([\s\S]*?)--->\n?/
+  contextCommentRegExp: /^<!--([\s\S]*?)-->\n?/
   category: []
   image: null
   @content: ->
