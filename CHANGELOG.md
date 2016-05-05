@@ -18,3 +18,7 @@ If it is enabled, it opens the entry URL at the browser immediately after you po
 * Image Uploader to fotolife
 You can upload images to your fotolife.
 (hatena ID and apiKey is required)
+
+## 3.0.0
+* UPDATE Entry feature added
+You can update the entry you posted in the past.
