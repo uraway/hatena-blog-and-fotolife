@@ -1,6 +1,6 @@
 # hatena-blog-entry-post
 
-- [日本語ドキュメント](https://github/uraway/hatena-blog-entry-post/blob/master/ja.md)
+- [日本語ドキュメント](https://github.com/uraway/hatena-blog-entry-post/blob/master/ja.md)
 
 Quickly and easily post the current file or selection from Atom to your [Hatena Blog](http://hatenablog.com/) and upload images to your [fotolife](http://f.hatena.ne.jp/)
 
