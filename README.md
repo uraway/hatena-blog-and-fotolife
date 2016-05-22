@@ -10,7 +10,7 @@ Quickly and easily post the current file or selection from Atom to your [Hatena 
 ![update](https://cloud.githubusercontent.com/assets/15242484/15038407/76a75a54-12de-11e6-971f-68ef5097a13b.gif)
 
 You can handle the entry's:
-- title
+- title (will be # header of the first line)
 - category
 - draft status
 
