@@ -82,3 +82,16 @@ module.exports = class HatenaBlogPost
       draft: !@isPublic
     }, (err, res) ->
       callback res, err
+
+  deleteEntry: (callback) ->
+    client = blog(
+      type: 'wsse'
+      username: @getHatenaId()
+      blogId:   @getBlogId()
+      apikey:   @getApiKey()
+    )
+
+    client.destroy {
+      id: @entryId
+      }, (err, res) ->
+        callback res, err

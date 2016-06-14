@@ -33,6 +33,7 @@ class HatenablogView extends View
 
             @div class: 'btn-group pull-right', outlet: 'toolbar', =>
               @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
+              @button outlet: 'deleteButton', class: 'btn', 'DELETE'
               @button outlet: 'updateButton', class: 'btn btn-primary inline-block-tight', 'UPDATE'
               @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
 
@@ -69,6 +70,7 @@ class HatenablogView extends View
     @publicButton.on 'click', => @entryPublic()
     @postButton.on 'click', => @postOrUpdate()
     @updateButton.on 'click', => @postOrUpdate()
+    @deleteButton.on 'click', => @deleteEntry()
     @cancelButton.on 'click', => @destroy()
     @categoryList.on 'click', => @deleteCategoryItem()
     @categoryEditor.on 'keydown', event, => @addCategoryItem(event, @categoryEditor.getText())
@@ -257,9 +259,11 @@ class HatenablogView extends View
     if @hatenaBlogPost.entryId
       @postButton.hide()
       @updateButton.show()
+      @deleteButton.show()
     else
       @updateButton.hide()
       @postButton.show()
+      @deleteButton.hide()
 
     @titleEditor.setText @hatenaBlogPost.entryTitle
 
@@ -313,3 +317,20 @@ class HatenablogView extends View
 
   removeTitle: (content) ->
     return content.replace(@titleRegExp, '').trim()
+
+  deleteEntry: ->
+    @hatenaBlogPost.deleteEntry (res, err) =>
+      if err
+        console.log err
+        atom.notifications.addError("#{err}", dismissable: true)
+      else
+        console.log('Entry deleted')
+        activeEditor = atom.workspace.getActiveTextEditor()
+        fileContent = @removeContextComment activeEditor.getText()
+        activeEditor.setText(fileContent)
+
+        atom.notifications.addSuccess("Entry deleted", dismissable: true)
+    # timeout is needed when error occures
+    setTimeout (=>
+      @destroy()
+    ), 1000
