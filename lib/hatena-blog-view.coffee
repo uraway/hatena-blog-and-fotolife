@@ -177,7 +177,8 @@ class HatenablogView extends View
         @saveContext({
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
-          categories: @hatenaBlogPost.categories
+          categories: @hatenaBlogPost.categories,
+          draft: !@hatenaBlogPost.isPublic
           })
         console.log res
 
@@ -210,7 +211,8 @@ class HatenablogView extends View
         @saveContext({
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
-          categories: @hatenaBlogPost.categories
+          categories: @hatenaBlogPost.categories,
+          draft: !@hatenaBlogPost.isPublic
           })
         console.log res
 
@@ -247,7 +249,7 @@ class HatenablogView extends View
       @hatenaBlogPost.categories = context.categories
       @category = context.categories
       @renderCategoryItem()
-    if @hatenaBlogPost.isPublic
+    if context.isPublic
       @entryPublic()
     else
       @entryDraft()
