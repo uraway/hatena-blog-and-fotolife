@@ -4,7 +4,7 @@
 
 ## 0.2.2
 * Display URL feature added
-When an entry is successfully posted, the entry url will display in the title editor.
+When an entry is successfully posted, the entry url will be displayed in the title editor.
 
 ## 1.0.0
 * Post Selection added
@@ -21,4 +21,8 @@ You can upload images to your fotolife.
 
 ## 3.0.0
 * UPDATE Entry feature added
-You can update the entry you posted in the past.
+You can update the entry you have posted.
+
+## 3.1.0
+* DELETE Entry feature added
+You can delete the entry you have posted
