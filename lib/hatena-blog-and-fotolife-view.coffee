@@ -79,7 +79,7 @@ class HatenablogView extends View
     # file element click event handler
     @fileSelect.on "click", event, =>
       @file.click()  if @file
-      event.preventDefault() # "#" に移動するのを防ぐ
+      event.preventDefault()
       false
 
     @on 'focus', =>
