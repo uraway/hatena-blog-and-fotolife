@@ -231,13 +231,13 @@ class HatenablogView extends View
   entryDraft: ->
     @draftButton.addClass('selected')
     @publicButton.removeClass('selected')
-    @hatenaBlogPost.draft = 'yes'
+    @hatenaBlogPost.draft = true
 
   # public button switched
   entryPublic: ->
     @draftButton.removeClass('selected')
     @publicButton.addClass('selected')
-    @hatenaBlogPost.draft = 'no'
+    @hatenaBlogPost.draft = false
 
   # toggle this package when the Form is hidden
   showEntryForm: ->
@@ -251,10 +251,6 @@ class HatenablogView extends View
       @hatenaBlogPost.categories = context.categories
       @category = context.categories
       @renderCategoryItem()
-    if context.isPublic
-      @entryPublic()
-    else
-      @entryDraft()
 
     if @hatenaBlogPost.entryId
       @postButton.hide()
