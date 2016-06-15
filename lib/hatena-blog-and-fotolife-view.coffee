@@ -180,7 +180,7 @@ class HatenablogView extends View
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
           categories: @hatenaBlogPost.categories,
-          draft: !@hatenaBlogPost.isPublic
+          draft: @hatenaBlogPost.draft
           })
         console.log res
 
@@ -214,7 +214,7 @@ class HatenablogView extends View
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
           categories: @hatenaBlogPost.categories,
-          draft: !@hatenaBlogPost.isPublic
+          draft: @hatenaBlogPost.draft
           })
         console.log res
 
@@ -231,13 +231,13 @@ class HatenablogView extends View
   entryDraft: ->
     @draftButton.addClass('selected')
     @publicButton.removeClass('selected')
-    @hatenaBlogPost.isPublic = false
+    @hatenaBlogPost.draft = 'yes'
 
   # public button switched
   entryPublic: ->
     @draftButton.removeClass('selected')
     @publicButton.addClass('selected')
-    @hatenaBlogPost.isPublic = true
+    @hatenaBlogPost.draft = 'no'
 
   # toggle this package when the Form is hidden
   showEntryForm: ->

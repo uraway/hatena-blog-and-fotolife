@@ -3,7 +3,7 @@ fotolife = require 'hatena-fotolife-api'
 
 module.exports = class HatenaBlogPost
   constructor: ->
-    @isPublic = null
+    @draft = 'yes'
     @entryTitle = ""
     @entryBody = ""
     @categories = []
@@ -57,7 +57,7 @@ module.exports = class HatenaBlogPost
       title: @entryTitle
       content: @entryBody
       categories: @categories
-      draft: !@isPublic
+      draft: @draft
     }, (err, res) =>
       if err
         callback res, err
@@ -79,7 +79,7 @@ module.exports = class HatenaBlogPost
       title: @entryTitle
       content: @entryBody
       categories: @categories
-      draft: !@isPublic
+      draft: @draft
     }, (err, res) ->
       callback res, err
 
