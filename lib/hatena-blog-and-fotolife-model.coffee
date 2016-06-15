@@ -3,7 +3,7 @@ fotolife = require 'hatena-fotolife-api'
 
 module.exports = class HatenaBlogPost
   constructor: ->
-    @draft = 'yes'
+    @draft = true
     @entryTitle = ""
     @entryBody = ""
     @categories = []
