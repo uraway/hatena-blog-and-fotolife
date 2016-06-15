@@ -1,7 +1,7 @@
 {
   "name": "hatena-blog-and-fotolife",
   "main": "./lib/hatena-blog-and-fotolife",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "POST/UPDATE/DELETE your Hatena Blog entry and upload an image to your fotolife",
   "keywords": [
     "Hatena Blog",
