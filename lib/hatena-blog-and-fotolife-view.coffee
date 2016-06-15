@@ -28,14 +28,14 @@ class HatenablogView extends View
               @subview 'categoryEditor', new TextEditorView(mini: true, placeholderText: 'Add a new category item...' )
 
             @div class: 'btn-group', =>
-              @button outlet: 'draftButton', class: 'btn', 'Draft'
-              @button outlet: 'publicButton', class: 'btn', 'Public'
+              @button outlet: 'draftButton', class: 'btn selected btn-success', 'Draft'
+              @button outlet: 'publicButton', class: 'btn btn-success', 'Public'
 
             @div class: 'btn-group pull-right', outlet: 'toolbar', =>
-              @button outlet: 'postButton', class: 'btn btn-primary inline-block-tight', 'POST'
-              @button outlet: 'deleteButton', class: 'btn', 'DELETE'
-              @button outlet: 'updateButton', class: 'btn btn-primary inline-block-tight', 'UPDATE'
-              @button outlet: 'cancelButton', class: 'btn inline-block-tight', 'Cancel'
+              @button outlet: 'postButton', class: 'btn btn-primary', 'POST'
+              @button outlet: 'deleteButton', class: 'btn btn-error', 'DELETE'
+              @button outlet: 'updateButton', class: 'btn btn-primary', 'UPDATE'
+              @button outlet: 'cancelButton', class: 'btn btn-warning', 'Cancel'
 
           @div outlet: 'progressIndicator', =>
             @span class: 'loading loading-spinner-medium'
@@ -79,7 +79,7 @@ class HatenablogView extends View
     # file element click event handler
     @fileSelect.on "click", event, =>
       @file.click()  if @file
-      event.preventDefault() # "#" に移動するのを防ぐ
+      event.preventDefault()
       false
 
     @on 'focus', =>
@@ -180,7 +180,7 @@ class HatenablogView extends View
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
           categories: @hatenaBlogPost.categories,
-          draft: !@hatenaBlogPost.isPublic
+          draft: @hatenaBlogPost.draft
           })
         console.log res
 
@@ -214,7 +214,7 @@ class HatenablogView extends View
           id: @hatenaBlogPost.entryId,
           title: @hatenaBlogPost.entryTitle,
           categories: @hatenaBlogPost.categories,
-          draft: !@hatenaBlogPost.isPublic
+          draft: @hatenaBlogPost.draft
           })
         console.log res
 
@@ -231,13 +231,13 @@ class HatenablogView extends View
   entryDraft: ->
     @draftButton.addClass('selected')
     @publicButton.removeClass('selected')
-    @hatenaBlogPost.isPublic = false
+    @hatenaBlogPost.draft = 'yes'
 
   # public button switched
   entryPublic: ->
     @draftButton.removeClass('selected')
     @publicButton.addClass('selected')
-    @hatenaBlogPost.isPublic = true
+    @hatenaBlogPost.draft = 'no'
 
   # toggle this package when the Form is hidden
   showEntryForm: ->
