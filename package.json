@@ -1,15 +1,16 @@
 {
   "name": "hatena-blog-and-fotolife",
-  "main": "./lib/hatena-blog",
+  "main": "./lib/hatena-blog-and-fotolife",
   "version": "4.1.0",
-  "description": "POST/UPDATE/DELETE your Hatena Blog entry",
+  "description": "POST/UPDATE/DELETE your Hatena Blog entry and upload an image to your fotolife",
   "keywords": [
-    "Hatena Blog"
+    "Hatena Blog",
+		"fotolife"
   ],
   "activationCommands": {
     "atom-workspace": [
-      "hatena-blog:post-current-file",
-      "hatena-blog:post-selection"
+      "hatena-blog-and-fotolife:post-current-file",
+      "hatena-blog-and-fotolife:post-selection"
     ]
   },
   "repository": "https://github.com/uraway/hatena-blog-and-fotolife",
