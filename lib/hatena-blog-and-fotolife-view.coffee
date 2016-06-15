@@ -2,7 +2,7 @@
 {TextEditorView, View} = require 'atom-space-pen-views'
 open = require 'open'
 
-HatenaBlogPost = require './hatena-blog-model'
+HatenaBlogPost = require './hatena-blog-and-fotolife-model'
 
 module.exports =
 class HatenablogView extends View
@@ -11,7 +11,7 @@ class HatenablogView extends View
   category: []
   image: null
   @content: ->
-    @div class: 'hatena-blog panel overlay from-top', =>
+    @div class: 'hatena-blog-and-fotolife panel overlay from-top', =>
       @div class: 'inset-panel', =>
 
         @div class: 'panel-heading', =>
@@ -50,8 +50,8 @@ class HatenablogView extends View
       @categoryList.append("#{key}/")
 
     atom.commands.add 'atom-text-editor',
-      'hatena-blog:post-current-file': => @postCurrentFile(),
-      'hatena-blog:post-selection': => @postSelection()
+      'hatena-blog-and-fotolife:post-current-file': => @postCurrentFile(),
+      'hatena-blog-and-fotolife:post-selection': => @postSelection()
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -121,7 +121,7 @@ class HatenablogView extends View
     if (!!fileContent.trim())
       @hatenaBlogPost = new HatenaBlogPost()
 
-      if atom.config.get('hatena-blog-entry-post.removeTitle') is true
+      if atom.config.get('hatena-blog-and-fotolife.removeTitle') is true
         @hatenaBlogPost.entryBody = @removeTitle(@removeContextComment(fileContent))
       else
         @hatenaBlogPost.entryBody = @removeContextComment(fileContent)
@@ -184,7 +184,7 @@ class HatenablogView extends View
           })
         console.log res
 
-        if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
+        if atom.config.get('hatena-blog-and-fotolife.openAfterPost') is true
           console.log "open #{entryURL}"
           open "#{entryURL}"
 
@@ -218,7 +218,7 @@ class HatenablogView extends View
           })
         console.log res
 
-        if atom.config.get('hatena-blog-entry-post.openAfterPost') is true
+        if atom.config.get('hatena-blog-and-fotolife.openAfterPost') is true
           console.log "open #{entryURL}"
           open "#{entryURL}"
 

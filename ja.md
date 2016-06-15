@@ -1,4 +1,4 @@
-# hatena-blog-entry-post
+# hatena-blog-and-fotolife
 
 このパッケージは、Atomから[はてなブログ](http://hatenablog.com/)のエントリーを投稿、更新、削除し、[フォトライフ](http://f.hatena.ne.jp/)に画像をアップロードする最良の方法です。
 
