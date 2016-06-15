@@ -1,4 +1,4 @@
-HatenablogView = require './hatena-blog-view'
+HatenablogView = require './hatena-blog-and-fotolife-view'
 
 module.exports =
 

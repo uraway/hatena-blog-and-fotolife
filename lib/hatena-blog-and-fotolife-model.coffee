@@ -9,13 +9,13 @@ module.exports = class HatenaBlogPost
     @categories = []
 
   getHatenaId: ->
-    atom.config.get("hatena-blog-entry-post.hatenaId")
+    atom.config.get("hatena-blog-and-fotolife.hatenaId")
 
   getBlogId: ->
-    atom.config.get("hatena-blog-entry-post.blogId")
+    atom.config.get("hatena-blog-and-fotolife.blogId")
 
   getApiKey: ->
-    atom.config.get("hatena-blog-entry-post.apiKey")
+    atom.config.get("hatena-blog-and-fotolife.apiKey")
 
   uploadImage: (@image) ->
     client = fotolife(

@@ -12,7 +12,7 @@
       "hatena-blog:post-selection"
     ]
   },
-  "repository": "https://github.com/uraway/hatena-blog-entry-post",
+  "repository": "https://github.com/uraway/hatena-blog-and-fotolife",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

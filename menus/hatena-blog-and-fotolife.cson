@@ -6,8 +6,8 @@
     'submenu': [
       'label': 'Hatena Blog Entry Post'
       'submenu': [
-        { 'label': 'Post Current File', 'command': 'hatena-blog:post-current-file' }
-        { 'label': 'Post Selection',    'command': 'hatena-blog:post-selection' }
+        { 'label': 'Post Current File', 'command': 'hatena-blog-and-fotolife:post-current-file' }
+        { 'label': 'Post Selection',    'command': 'hatena-blog-and-fotolife:post-selection' }
       ]
     ]
   }
