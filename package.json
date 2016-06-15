@@ -1,11 +1,11 @@
 {
   "name": "hatena-blog-and-fotolife",
   "main": "./lib/hatena-blog-and-fotolife",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "POST/UPDATE/DELETE your Hatena Blog entry and upload an image to your fotolife",
   "keywords": [
     "Hatena Blog",
-		"fotolife"
+    "fotolife"
   ],
   "activationCommands": {
     "atom-workspace": [
