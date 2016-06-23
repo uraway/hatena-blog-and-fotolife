@@ -13,10 +13,14 @@
 
 ![delete](https://cloud.githubusercontent.com/assets/15242484/16063420/1c8e1394-32d4-11e6-98f8-c286e9809c01.gif)
 
-エントリーの次の要素を扱うことが出来ます:
-- タイトル (内容の見出し(#h1)がタイトルになります)
-- カテゴリー
-- 下書きか公開か
+## エントリーインデックスを取得する
+
+![index](https://cloud.githubusercontent.com/assets/15242484/16293971/b61dd578-3958-11e6-94ff-dcb77a10fa60.gif)
+
+## エントリーを取得する
+
+![get](https://cloud.githubusercontent.com/assets/15242484/16293997/eb3014b0-3958-11e6-99eb-e0a5d3e21099.gif)
+
 
 #### カテゴリーを編集する
 - カテゴリーテクストを入力します
@@ -29,7 +33,8 @@
 
 ## コマンド
 - **Post/Update/Delete Current File (⌥⌘P)** エディタのアクティブなファイルを投稿/更新/削除します
-- **Post/Update/Delete Selection (⇧⌥⌘P)** エディタの選択部分を投稿/更新/削除します
+- **Post/Update Selection (⇧⌥⌘P)** エディタの選択部分を投稿/更新します
+- **Index Entries (⌥⌘I)** エントリーのインデックスを取得します。エントリーの内容を取得することも出来ます。
 
 ## 必要な設定
 このパッケージを使ってエントリーを投稿/更新/削除するには、以下の情報を設定する必要があります。各フィールドにコピー&ペーストで入力して下さい
