@@ -10,3 +10,4 @@
 'atom-workspace':
   'alt-ctrl-p': 'hatena-blog-and-fotolife:post-current-file'
   'shift-alt-ctrl-p': 'hatena-blog-and-fotolife:post-selection'
+  'alt-ctrl-i': 'hatena-blog-and-fotolife:index'
