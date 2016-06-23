@@ -29,3 +29,6 @@ You can delete the entry you have posted
 
 ## 4.0.0
 * Rename to hatena-blog-and-fotolife
+
+## 4.2.0
+* INDEX and GET feature added
