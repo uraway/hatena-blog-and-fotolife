@@ -1,17 +1,22 @@
 HatenablogView = require './hatena-blog-and-fotolife-view'
+IndexListView = require './hatena-blog-and-fotolife-index-view'
 
 module.exports =
 
   hatenablogView: null
+  indexListView: null
 
   activate: (state) ->
     @hatenaBlogView = new HatenablogView(state.hatenaBlogViewState)
+    @indexListView = new IndexListView(state.indexListViewState)
 
   deactivate: ->
     @hatenaBlogView.destroy()
+    @indexListView.destroy()
 
   serialize: ->
     hatenaBlogViewState: @hatenaBlogView.serialize()
+    indexListViewState: @indexListView.serialize()
 
   config:
     hatenaId:

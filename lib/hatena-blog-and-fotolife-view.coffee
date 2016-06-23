@@ -102,7 +102,7 @@ class HatenablogView extends View
 
   addCategoryItem: (event, item) ->
     if (event.keyCode is 13)
-      console.log item
+      # console.log item
       @category.push item
       @categoryEditor.setText("")
 
@@ -153,10 +153,10 @@ class HatenablogView extends View
 
   postOrUpdate: ->
     if @hatenaBlogPost.entryId
-      console.log('Update entry ' + @hatenaBlogPost.entryId)
+      # console.log('Update entry ' + @hatenaBlogPost.entryId)
       @update()
     else
-      console.log('Post new entry')
+      # console.log('Post new entry')
       @post()
 
   update: ->
@@ -182,10 +182,10 @@ class HatenablogView extends View
           categories: @hatenaBlogPost.categories,
           draft: @hatenaBlogPost.draft
           })
-        console.log res
+        # console.log res
 
         if atom.config.get('hatena-blog-and-fotolife.openAfterPost') is true
-          console.log "open #{entryURL}"
+          # console.log "open #{entryURL}"
           open "#{entryURL}"
 
     # timeout is needed when error occures
@@ -320,7 +320,7 @@ class HatenablogView extends View
         console.log err
         atom.notifications.addError("#{err}", dismissable: true)
       else
-        console.log('Entry deleted')
+        # console.log('Entry deleted')
         activeEditor = atom.workspace.getActiveTextEditor()
         fileContent = @removeContextComment activeEditor.getText()
         activeEditor.setText(fileContent)

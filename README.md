@@ -16,11 +16,13 @@ This is the best way to **POST** / **UPDATE** / **DELETE** your [Hatena Blog](ht
 
 ![delete](https://cloud.githubusercontent.com/assets/15242484/16063420/1c8e1394-32d4-11e6-98f8-c286e9809c01.gif)
 
+## INDEX
 
-You can handle the entry's:
-- title (#h1 of the first line)
-- category
-- draft status
+![index](https://cloud.githubusercontent.com/assets/15242484/16293971/b61dd578-3958-11e6-94ff-dcb77a10fa60.gif)
+
+## GET
+
+![get](https://cloud.githubusercontent.com/assets/15242484/16293997/eb3014b0-3958-11e6-99eb-e0a5d3e21099.gif)
 
 #### Add a category
 - Input a category text
@@ -34,6 +36,7 @@ You can handle the entry's:
 ## Commands
 - **Post/Update/Delete Current File (⌥⌘P)** posts/updates/deletes the contents of the current file in the editor.
 - **Post/Update/Delete Selection (⇧⌥⌘P)** posts/updates/deletes the contents of the current selection.
+- **Index Entries (⌥⌘I)** indexes your entries. You can get the content from the indexes.
 
 ## Required settings
 You need the following to post, update or delete an entry via this package. Copy and paste them into the each setting field.

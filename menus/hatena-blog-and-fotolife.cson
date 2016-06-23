@@ -4,10 +4,11 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'Hatena Blog Entry Post'
+      'label': 'Hatena Blog And Fotolife'
       'submenu': [
         { 'label': 'Post Current File', 'command': 'hatena-blog-and-fotolife:post-current-file' }
         { 'label': 'Post Selection',    'command': 'hatena-blog-and-fotolife:post-selection' }
+        { 'label': 'Index Entries',     'command': 'hatena-blog-and-fotolife:index' }
       ]
     ]
   }
