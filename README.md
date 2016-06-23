@@ -2,7 +2,7 @@
 
 - [日本語ドキュメント](https://github.com/uraway/hatena-blog-and-fotolife/blob/master/ja.md)
 
-This is the best way to **POST** / **UPDATE** / **DELETE** your [Hatena Blog](http://hatenablog.com/) entry and upload an image to your [fotolife](http://f.hatena.ne.jp/)
+This is the best way to **POST** / **UPDATE** / **DELETE** / **INDEX** / **GET** your [Hatena Blog](http://hatenablog.com/) entry and upload an image to your [fotolife](http://f.hatena.ne.jp/)
 
 ## POST
 
