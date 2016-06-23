@@ -37,7 +37,7 @@ module.exports = class HatenaBlogPost
         markdown = "#{err.statusCode}"
         editor.setTextInBufferRange(range[0], markdown)
       else
-        console.log res.entry
+        # console.log res.entry
         imageurl = res.entry["hatena:imageurl"]._
         markdown = "![](#{imageurl})"
         editor.setTextInBufferRange(range[0], markdown)
@@ -95,3 +95,14 @@ module.exports = class HatenaBlogPost
       id: @entryId
       }, (err, res) ->
         callback res, err
+
+  indexEntries: (callback) ->
+    client = blog(
+      type: 'wsse'
+      username: @getHatenaId()
+      blogId:   @getBlogId()
+      apikey:   @getApiKey()
+    )
+
+    client.index (err, res) ->
+      callback res, err
