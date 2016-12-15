@@ -25,8 +25,8 @@ module.exports = class HatenaBlogPost
     )
 
     options =
-      title: image
-      file: image
+      title: @image
+      file: @image
 
     # insert loading text
     editor = atom.workspace.getActiveTextEditor()
