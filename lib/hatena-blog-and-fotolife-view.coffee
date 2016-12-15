@@ -174,7 +174,9 @@ class HatenablogView extends View
         atom.notifications.addError("#{err}", dismissable: true)
         console.log err
       else
-        entryURL = res.entry.link[1].$.href
+        hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
+        blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
+        entryURL = if @hatenaBlogPost.draft is false then res.entry.link[1].$.href else "http://blog.hatena.ne.jp/#{hatenaId}/#{blogId}/edit?entry=#{@hatenaBlogPost.entryId}"
         atom.notifications.addSuccess("Updated #{entryURL}", dismissable: true)
         @saveContext({
           id: @hatenaBlogPost.entryId,
@@ -182,10 +184,8 @@ class HatenablogView extends View
           categories: @hatenaBlogPost.categories,
           draft: @hatenaBlogPost.draft
           })
-        # console.log res
 
         if atom.config.get('hatena-blog-and-fotolife.openAfterPost') is true
-          # console.log "open #{entryURL}"
           open "#{entryURL}"
 
     # timeout is needed when error occures
@@ -208,7 +208,9 @@ class HatenablogView extends View
         atom.notifications.addError("#{err}", dismissable: true)
         console.log err
       else
-        entryURL = res.entry.link[1].$.href
+        hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
+        blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
+        entryURL = if @hatenaBlogPost.draft is false then res.entry.link[1].$.href else "http://blog.hatena.ne.jp/#{hatenaId}/#{blogId}/edit?entry=#{@hatenaBlogPost.entryId}"
         atom.notifications.addSuccess("Posted at #{entryURL}", dismissable: true)
         @saveContext({
           id: @hatenaBlogPost.entryId,
@@ -216,10 +218,8 @@ class HatenablogView extends View
           categories: @hatenaBlogPost.categories,
           draft: @hatenaBlogPost.draft
           })
-        console.log res
 
         if atom.config.get('hatena-blog-and-fotolife.openAfterPost') is true
-          console.log "open #{entryURL}"
           open "#{entryURL}"
 
     # timeout is needed when error occures
