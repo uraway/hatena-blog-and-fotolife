@@ -49,8 +49,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.create {
@@ -70,8 +70,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.update {
@@ -87,8 +87,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.destroy {
@@ -100,8 +100,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.index (err, res) ->

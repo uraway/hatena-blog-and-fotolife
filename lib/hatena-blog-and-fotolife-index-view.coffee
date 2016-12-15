@@ -34,7 +34,7 @@ class IndexListView extends SelectListView
             for k in res.feed.entry[i].category
               @categories.push k.$.term
 
-          @indexes[i] = { id: @parseEntryId(res.feed.entry[i].id), title: res.feed.entry[i].title._, content: res.feed.entry[i].content._, categories: @categories, draft: res.feed.entry[i]['app:control']['app:draft']._ }
+          @indexes[i] = {id: @parseEntryId(res.feed.entry[i].id), title: res.feed.entry[i].title._, content: res.feed.entry[i].content._, categories: @categories, draft: res.feed.entry[i]['app:control']['app:draft']._}
           @removeClass('loading loading-spinner-medium')
           i++
           @setItems(@indexes)

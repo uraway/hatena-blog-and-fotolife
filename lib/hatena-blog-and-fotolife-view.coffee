@@ -86,13 +86,13 @@ class HatenablogView extends View
       @titleEditor.focus()
 
   # upload image to fotolife
-  uploadImage: () ->
+  uploadImage: ->
     @image = @file[0].files[0].path
 
     @hatenaBlogPost.uploadImage @image
 
   # delete last item of the category array
-  deleteCategoryItem: () ->
+  deleteCategoryItem: ->
     @category.pop()
 
     # render category items above the category editor after initializing the content
@@ -109,12 +109,12 @@ class HatenablogView extends View
       # render category items above the category editor after initializing the content
       @renderCategoryItem()
 
-  renderCategoryItem: () ->
+  renderCategoryItem: ->
     @categoryList.empty()
     for key in @category
       @categoryList.append("#{key}/")
 
-  postCurrentFile: () ->
+  postCurrentFile: ->
     activeEditor = atom.workspace.getActiveTextEditor()
     fileContent = activeEditor.getText()
 
