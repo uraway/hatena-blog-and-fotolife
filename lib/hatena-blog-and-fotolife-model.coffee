@@ -25,8 +25,8 @@ module.exports = class HatenaBlogPost
     )
 
     options =
-      title: image
-      file: image
+      title: @image
+      file: @image
 
     # insert loading text
     editor = atom.workspace.getActiveTextEditor()
@@ -49,8 +49,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.create {
@@ -70,8 +70,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.update {
@@ -87,8 +87,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.destroy {
@@ -100,8 +100,8 @@ module.exports = class HatenaBlogPost
     client = blog(
       type: 'wsse'
       username: @getHatenaId()
-      blogId:   @getBlogId()
-      apikey:   @getApiKey()
+      blogId: @getBlogId()
+      apikey: @getApiKey()
     )
 
     client.index (err, res) ->

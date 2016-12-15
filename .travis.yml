@@ -1,0 +1,12 @@
+language: objective-c
+
+notifications:
+  slack: tnishida-lab:1TOX0JWUcL6nMq85gq3yLRiV
+
+env:
+  - APM_TEST_PACKAGES="hatena-blog-and-fotolife"
+
+script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
+
+git:
+  depth: 10
