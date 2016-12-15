@@ -14,7 +14,7 @@
       "hatena-blog-and-fotolife:index"
     ]
   },
-  "repository": "git@github.com:uraway/hatena-blog-and-fotolife.git",
+  "repository": "https://github.com/uraway/hatena-blog-and-fotolife",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
