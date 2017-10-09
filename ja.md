@@ -42,8 +42,13 @@
 画像のアップロードには、はてなIDとAPIキーを使用します。
 
 - はてなID
-- [ブログ URL](http://blog.hatena.ne.jp/my/config)
+- [ブログ URL](http://blog.hatena.ne.jp/my/config) (`http://`を除く)
+
+![](https://i.imgur.com/k1wVB8K.png)
+
 - [API キー](http://blog.hatena.ne.jp/my/config/detail)
+
+![](https://i.imgur.com/iHIWa74.png)
 
 ## オプション
 
