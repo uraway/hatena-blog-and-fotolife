@@ -26,7 +26,7 @@ module.exports =
       default: ""
     blogId:
       title: 'Blog URL'
-      description: 'Your Blog URL',
+      description: 'Your Blog URL without `http://`',
       type: 'string'
       default: ""
     apiKey:

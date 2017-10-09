@@ -44,8 +44,13 @@ You need the following to post, update or delete an entry via this package. Copy
 Only Hatena ID and API Key allow the package to upload an image.
 
 - Hatena ID
-- [Blog URL](http://blog.hatena.ne.jp/my/config)
+- [Blog URL](http://blog.hatena.ne.jp/my/config) (without `http://`)
+
+![](https://i.imgur.com/k1wVB8K.png)
+
 - [API Key](http://blog.hatena.ne.jp/my/config/detail)
+
+![](https://i.imgur.com/iHIWa74.png)
 
 ## Optional settings
 
