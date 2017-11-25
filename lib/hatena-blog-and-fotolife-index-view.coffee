@@ -28,7 +28,10 @@ class IndexListView extends SelectListView
       else
         console.log res
         i = 0
-        while i <= 9
+        entryMaxNum = 9
+        if res.feed.entry.length < 9
+          entryMaxNum = res.feed.entry.length -1
+        while i <= entryMaxNum
           @categories = []
           if res.feed.entry[i].category
             for k in res.feed.entry[i].category
