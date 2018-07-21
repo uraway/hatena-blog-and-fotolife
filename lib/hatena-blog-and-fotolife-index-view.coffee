@@ -30,7 +30,7 @@ class IndexListView extends SelectListView
         i = 0
         entryMaxNum = 9
         if res.feed.entry.length < 9
-          entryMaxNum = res.feed.entry.length -1
+          entryMaxNum = res.feed.entry.length - 1
         while i <= entryMaxNum
           @categories = []
           if res.feed.entry[i].category
