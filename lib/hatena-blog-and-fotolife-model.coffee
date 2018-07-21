@@ -80,8 +80,7 @@ module.exports = class HatenaBlogPost
       content: @entryBody
       categories: @categories
       draft: @draft
-    }, (err, res) ->
-      callback res, err
+    }, callback
 
   deleteEntry: (callback) ->
     client = blog(
@@ -93,8 +92,7 @@ module.exports = class HatenaBlogPost
 
     client.destroy {
       id: @entryId
-      }, (err, res) ->
-        callback res, err
+      }, callback
 
   indexEntries: (callback) ->
     client = blog(
@@ -104,5 +102,4 @@ module.exports = class HatenaBlogPost
       apikey: @getApiKey()
     )
 
-    client.index (err, res) ->
-      callback res, err
+    client.index callback

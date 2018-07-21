@@ -15,7 +15,7 @@ class IndexListView extends SelectListView
 
   index: ->
     @hatenaBlogPost = new HatenaBlogPost()
-    @hatenaBlogPost.indexEntries (res, err) =>
+    @hatenaBlogPost.indexEntries (err, res) =>
 
       @addClass('overlay from-top')
       @addClass('loading loading-spinner-medium')
