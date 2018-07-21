@@ -24,7 +24,6 @@ class IndexListView extends SelectListView
 
       if err
         @panel.hide()
-        console.log err
       else
         console.log res
         i = 0

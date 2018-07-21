@@ -172,7 +172,6 @@ class HatenablogView extends View
     @hatenaBlogPost.updateEntry (res, err) =>
       if err
         atom.notifications.addError("#{err}", dismissable: true)
-        console.log err
       else
         hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
         blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
@@ -206,7 +205,6 @@ class HatenablogView extends View
     @hatenaBlogPost.postEntry (res, err) =>
       if err
         atom.notifications.addError("#{err}", dismissable: true)
-        console.log err
       else
         hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
         blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
@@ -317,7 +315,6 @@ class HatenablogView extends View
   deleteEntry: ->
     @hatenaBlogPost.deleteEntry (res, err) =>
       if err
-        console.log err
         atom.notifications.addError("#{err}", dismissable: true)
       else
         # console.log('Entry deleted')
