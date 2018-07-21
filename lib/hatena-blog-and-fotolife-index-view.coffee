@@ -15,7 +15,7 @@ class IndexListView extends SelectListView
 
   index: ->
     @hatenaBlogPost = new HatenaBlogPost()
-    @hatenaBlogPost.indexEntries (res, err) =>
+    @hatenaBlogPost.indexEntries (err, res) =>
 
       @addClass('overlay from-top')
       @addClass('loading loading-spinner-medium')
@@ -24,13 +24,12 @@ class IndexListView extends SelectListView
 
       if err
         @panel.hide()
-        console.log err
       else
         console.log res
         i = 0
         entryMaxNum = 9
         if res.feed.entry.length < 9
-          entryMaxNum = res.feed.entry.length -1
+          entryMaxNum = res.feed.entry.length - 1
         while i <= entryMaxNum
           @categories = []
           if res.feed.entry[i].category

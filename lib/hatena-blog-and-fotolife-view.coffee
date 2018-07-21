@@ -169,10 +169,9 @@ class HatenablogView extends View
     @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
     # post entry and parse response
-    @hatenaBlogPost.updateEntry (res, err) =>
+    @hatenaBlogPost.updateEntry (err, res) =>
       if err
         atom.notifications.addError("#{err}", dismissable: true)
-        console.log err
       else
         hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
         blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
@@ -203,10 +202,9 @@ class HatenablogView extends View
     @hatenaBlogPost.entryTitle = @titleEditor.getText()
 
     # post entry and parse response
-    @hatenaBlogPost.postEntry (res, err) =>
+    @hatenaBlogPost.postEntry (err, res) =>
       if err
         atom.notifications.addError("#{err}", dismissable: true)
-        console.log err
       else
         hatenaId = atom.config.get('hatena-blog-and-fotolife.hatenaId')
         blogId = atom.config.get('hatena-blog-and-fotolife.blogId')
@@ -315,9 +313,8 @@ class HatenablogView extends View
     return content.replace(@titleRegExp, '').trim()
 
   deleteEntry: ->
-    @hatenaBlogPost.deleteEntry (res, err) =>
+    @hatenaBlogPost.deleteEntry (err, res) =>
       if err
-        console.log err
         atom.notifications.addError("#{err}", dismissable: true)
       else
         # console.log('Entry deleted')
