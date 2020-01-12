@@ -26,7 +26,7 @@
     "atom-space-pen-views": "^2.1.0",
     "hatena-blog-api": "^0.2.0",
     "hatena-fotolife-api": "^0.4.1",
-    "open": "0.0.5",
+    "open": "7.0.0",
     "space-pen": "^5.1.1"
   },
   "devDependencies": {
